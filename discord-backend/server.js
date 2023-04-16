@@ -3,6 +3,7 @@ const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { verifyToken } = require("./middlewares/auth");
+const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
@@ -20,6 +21,7 @@ const PORT = process.env.PORT || 5002;
 
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"))
 
 app.use("/api/auth", require("./routes/authRoutes"));
 

@@ -1,11 +1,11 @@
-const axios = require("axios");
+import axios from 'axios'
 
 const apiClient = axios.create({
   baseURL: "http://localhost:5002/api",
-  timeout: 1000,
+  timeout: 2000,
 });
 
-export const login = async (email, password) => {
+export const loginApi = async (email, password) => {
   try {
     const response = await apiClient.post("/auth/login", {
       email,
@@ -21,7 +21,7 @@ export const login = async (email, password) => {
   }
 };
 
-export const register = async (username, email, password) => {
+export const registerApi = async (username, email, password) => {
   try {
     const response = await apiClient.post("/auth/register", {
       username,

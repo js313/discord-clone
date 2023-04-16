@@ -2,17 +2,31 @@ import React, { useState } from "react";
 import AuthBox from "../components/AuthBox";
 import { Button, Container, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getActions } from "../app/actions/authActions";
+import { useNavigate } from "react-router-dom"
 
-const Register = () => {
+const Register = (props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+
+  const handleRegister = (event) => {
+    event.preventDefault()
+    props.register({
+      username,
+      email,
+      password
+    }, navigate)
+  }
+
   return (
     <>
       <AuthBox>
         <h1 style={{ marginBottom: "40px" }}>Register</h1>
         {/* Create a register form */}
-        <Container component="form">
+        <Container component="form" onSubmit={handleRegister}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -25,6 +39,7 @@ const Register = () => {
                 inputProps={{
                   style: { color: "white" },
                 }}
+                onChange={(event) => setUsername(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -38,6 +53,7 @@ const Register = () => {
                 inputProps={{
                   style: { color: "white" },
                 }}
+                onChange={(event) => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -51,6 +67,7 @@ const Register = () => {
                 inputProps={{
                   style: { color: "white" },
                 }}
+                onChange={(event) => setPassword(event.target.value)}
               />
             </Grid>
             <Grid item xs={2}>
@@ -84,4 +101,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(null, (dispatch) => { return { ...getActions(dispatch) } })(Register);
