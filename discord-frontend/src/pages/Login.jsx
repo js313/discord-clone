@@ -2,25 +2,24 @@ import React, { useState } from "react";
 import AuthBox from "../components/AuthBox";
 import { Button, Container, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { getActions } from "../app/actions/authActions";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = (event) => {
     event.preventDefault();
-    props.login({ email, password }, navigate)
-  }
+    props.login({ email, password }, navigate);
+  };
 
   return (
     <>
       <AuthBox>
         <h1 style={{ marginBottom: "40px" }}>Login</h1>
-        {/* Create a login form */}
         <Container component="form" onSubmit={handleLogin}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -82,4 +81,6 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, (dispatch) => { return { ...getActions(dispatch) } })(Login);  //passes all actions as props
+export default connect(null, (dispatch) => {
+  return { ...getActions(dispatch) };
+})(Login); //passes all actions as props
