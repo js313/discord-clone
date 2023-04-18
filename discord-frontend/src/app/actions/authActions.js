@@ -1,4 +1,5 @@
 import { loginApi, registerApi } from "../../api";
+import { showAlert } from "./alertActions";
 
 const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
@@ -9,6 +10,7 @@ export const getActions = (dispatch) => {
     login: (userDetails, navigate) => dispatch(login(userDetails, navigate)),
     register: (userDetails, navigate) =>
       dispatch(register(userDetails, navigate)),
+    logout: (navigate) => dispatch(logout(navigate)),
   };
 };
 
@@ -21,8 +23,14 @@ const setUserDetails = (userDetails) => {
 
 const login = (userDetails, navigate) => {
   return async (dispatch) => {
-    const { response, success } = await loginApi(userDetails.email, userDetails.password);
+    const { response, success, error } = await loginApi(
+      userDetails.email,
+      userDetails.password
+    );
     if (!success || !response.data.success) {
+      dispatch(
+        showAlert(error.response.data.message || "Invalid Credentials", "error")
+      );
     } else {
       console.log("data", response);
       localStorage.setItem("user", JSON.stringify(response.data.data));
@@ -34,14 +42,30 @@ const login = (userDetails, navigate) => {
 
 const register = (userDetails, navigate) => {
   return async (dispatch) => {
-    const { response, success } = await registerApi(userDetails.username, userDetails.email, userDetails.password);
+    const { response, success, error } = await registerApi(
+      userDetails.username,
+      userDetails.email,
+      userDetails.password
+    );
     if (!success || !response.data.success) {
+      dispatch(
+        showAlert(error.response.data.message || "Invalid Credentials", "error")
+      );
     } else {
       console.log("data", response);
       localStorage.setItem("user", JSON.stringify(response.data.data));
       dispatch(setUserDetails(response.data));
       navigate("/");
     }
+  };
+};
+
+const logout = (navigate) => {
+  return async (dispatch) => {
+    localStorage.removeItem("user");
+    dispatch(showAlert("Logged Out Successfully.", "success"));
+    dispatch(setUserDetails(null));
+    navigate("/login");
   };
 };
 
