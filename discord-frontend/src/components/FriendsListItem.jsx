@@ -9,7 +9,7 @@ import OnlineIndicator from "./OnlineIndicator";
 const FriendsListItem = (props) => {
   return (
     <>
-      <ListItemButton disablePadding disableGutters sx={{ p: 0, px: 0.5 }}>
+      <ListItemButton disableGutters sx={{ p: 0, px: 0.5 }}>
         <ListItemAvatar>
           {props.friend.image ? (
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

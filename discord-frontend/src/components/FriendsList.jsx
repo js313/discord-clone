@@ -31,10 +31,10 @@ const FriendsList = () => {
     <Wrapper>
       <List sx={{ width: "100%", bgcolor: "transparent" }} disablePadding>
         {dummyList.map((friend) => (
-          <>
+          <React.Fragment key={friend.id}>
             <FriendsListItem key={friend.id} friend={friend} />
             <Divider variant="inset" component="li" />
-          </>
+          </React.Fragment>
         ))}
       </List>
     </Wrapper>
