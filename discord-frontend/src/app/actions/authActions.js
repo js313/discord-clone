@@ -11,6 +11,7 @@ export const getActions = (dispatch) => {
     register: (userDetails, navigate) =>
       dispatch(register(userDetails, navigate)),
     logout: (navigate) => dispatch(logout(navigate)),
+    setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails)), //if someone lands directly on the dashboard page, we need to set the user details
   };
 };
 

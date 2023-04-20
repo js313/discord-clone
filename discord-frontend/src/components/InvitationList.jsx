@@ -1,4 +1,4 @@
-import { List, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import React from "react";
 import InvitationListItem from "./InvitationListItem";
 
