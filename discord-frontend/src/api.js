@@ -1,5 +1,5 @@
 import axios from "axios";
-// import store from "./app/store";
+import store from "./app/store";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:5002/api",
@@ -55,10 +55,24 @@ export const registerApi = async (username, email, password) => {
   }
 };
 
-// const checkResponseCode = (response) => {
-//   if (response.status === 401 || response.status === 403) {
-//     store.auth.logout();
-//   }
-// };
+const checkNotLoggedIn = (response) => {
+  if (response.status === 401 || response.status === 403) {
+    store.auth.logout();
+  }
+};
 
 // protected routes
+
+export const sendFriendRequestApi = async (data) => {
+  try {
+    const response = await apiClient.post("/friends/send-request", data);
+    return { success: true, response };
+  } catch (error) {
+    console.error(error);
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};

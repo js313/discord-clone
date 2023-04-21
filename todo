@@ -1,1 +1,5 @@
+BE:-
 useffect in /login, /register to redirect if already logged in.
+
+FE:-
+Revise redux, store and actions, how it is implemented.
