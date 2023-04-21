@@ -2,6 +2,7 @@ const socketIO = require("socket.io");
 const authSocket = require("./middlewares/authSocket");
 const {
   newConnectionHandler,
+  removeConnectionHandler,
 } = require("./socketHandlers/newConnectionHandler");
 
 const registerSocketServer = (server) => {
@@ -17,7 +18,10 @@ const registerSocketServer = (server) => {
   io.on("connection", (socket) => {
     console.log("New client connected: " + socket.id);
     newConnectionHandler(socket, io);
-    socket.on("disconnect", () => console.log("Client disconnected"));
+    socket.on("disconnect", () => {
+      removeConnectionHandler(socket, io);
+      console.log("Client disconnected");
+    });
   });
 };
 
