@@ -7,6 +7,7 @@ import AppBar from "../components/AppBar";
 import { useNavigate } from "react-router-dom";
 import { getActions } from "../app/actions/authActions";
 import { connect } from "react-redux";
+import { connectToSocket } from "../socket/connection";
 
 const Wrapper = styled("div")(({ theme }) => ({
   width: "100%",
@@ -22,6 +23,7 @@ const Dashboard = (props) => {
       navigate("/login");
     } else {
       props.setUserDetails(user); //if signed in user refreshes or directly goes to dashboard, then user details are set in redux store
+      connectToSocket(user);
     }
   }, [navigate, props]);
   return (

@@ -19,12 +19,16 @@ mongoose
 
 const PORT = process.env.PORT || 5002;
 
+const socketServer = require("./socketServer");
+const server = http.createServer(app);
+socketServer.registerSocketServer(server);
+
 app.use(express.json());
 app.use(cors());
-app.use(morgan("dev"))
+app.use(morgan("dev"));
 
 app.use("/api/auth", require("./routes/authRoutes"));
 
 app.use(verifyToken);
 
-app.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
