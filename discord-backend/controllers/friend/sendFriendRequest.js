@@ -1,5 +1,6 @@
 const FriendRequest = require("../../models/friendRequest");
 const User = require("../../models/user");
+const { updateRequestList } = require("../../socketServer");
 
 const sendFriendRequestController = async (req, res, next) => {
   try {
@@ -29,18 +30,22 @@ const sendFriendRequestController = async (req, res, next) => {
       });
     }
     const alreadyPendingRequest = await FriendRequest.find({
-      $and: [{ senderId }, { receiverId: receiver.id }],
+      $or: [
+        { $and: [{ senderId }, { receiverId: receiver.id }] },
+        { $and: [{ receiverId: senderId }, { senderId: receiver.id }] },
+      ],
     });
     if (alreadyPendingRequest && alreadyPendingRequest.length > 0) {
       return res.status(409).json({
         success: false,
-        message: "Request already sent",
+        message: "Request already exists",
       });
     }
     await FriendRequest.create({
       senderId,
       receiverId: receiver.id,
     });
+    updateRequestList(receiver.id);
     return res
       .status(201)
       .json({ success: true, message: "Request sent successfully." });

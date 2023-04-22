@@ -1,24 +1,7 @@
 import { styled } from "@mui/material";
 import React from "react";
 import InvitationListItem from "./InvitationListItem";
-
-const dummyList = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@doe.com",
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    email: "jane@doe.com",
-  },
-  {
-    id: 3,
-    name: "John Smith",
-    email: "john@smith.com",
-  },
-];
+import { connect } from "react-redux";
 
 const Wrapper = styled("div")(({ theme }) => ({
   width: "100%",
@@ -29,16 +12,18 @@ const Wrapper = styled("div")(({ theme }) => ({
   overflow: "auto",
 }));
 
-const InvitationList = () => {
+const InvitationList = (props) => {
   return (
     <Wrapper>
       {/* <List> */}
-      {dummyList.map((invitation) => {
-        return <InvitationListItem key={invitation.id} invite={invitation} />;
+      {props.friendRequests.map((invitation) => {
+        return <InvitationListItem key={invitation._id} invite={invitation} />;
       })}
       {/* </List> */}
     </Wrapper>
   );
 };
 
-export default InvitationList;
+export default connect((state) => {
+  return { ...state.friend };
+}, null)(InvitationList);

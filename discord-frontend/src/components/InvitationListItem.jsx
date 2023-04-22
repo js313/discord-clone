@@ -37,8 +37,8 @@ const InvitationListItem = (props) => {
         </>
       }
     >
-      <Tooltip title={props.invite.email}>
-        <ListItemText primary={props.invite.name} />
+      <Tooltip title={props.invite.senderId.email}>
+        <ListItemText primary={props.invite.senderId.username} />
       </Tooltip>
     </ListItem>
   );

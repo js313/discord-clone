@@ -15,7 +15,7 @@ export const connectToSocket = (user) => {
   });
 
   socket.on("friend-requests", (data) => {
-    const { friendRequests } = data;
+    const friendRequests = data;
     store.dispatch(setFriendRequests(friendRequests));
   });
 };
