@@ -5,11 +5,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { getActions } from "../app/actions/friendsAction";
 
 const AddFriendDialog = (props) => {
   const [email, setEmail] = useState("");
 
   const handleSendInvitation = () => {
+    props.sendFriendRequest({ email });
     props.closeDialogHandler();
     setEmail("");
   };
@@ -58,4 +61,6 @@ const AddFriendDialog = (props) => {
   );
 };
 
-export default AddFriendDialog;
+export default connect(null, (dispatch) => {
+  return { ...getActions(dispatch) };
+})(AddFriendDialog);

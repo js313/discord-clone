@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 6,
   },
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

@@ -28,6 +28,8 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use(verifyToken);
+app.use("/api/friends", require("./routes/friendRoutes"));
 
 app.use(verifyToken);
 

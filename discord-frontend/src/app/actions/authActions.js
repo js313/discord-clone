@@ -1,4 +1,5 @@
 import { loginApi, registerApi } from "../../api";
+import { disconnectFromSocket } from "../../socket/connection";
 import { showAlert } from "./alertActions";
 
 const authActions = {
@@ -33,7 +34,6 @@ const login = (userDetails, navigate) => {
         showAlert(error.response.data.message || "Invalid Credentials", "error")
       );
     } else {
-      console.log("data", response);
       localStorage.setItem("user", JSON.stringify(response.data.data));
       dispatch(setUserDetails(response.data));
       navigate("/");
@@ -53,7 +53,6 @@ const register = (userDetails, navigate) => {
         showAlert(error.response.data.message || "Invalid Credentials", "error")
       );
     } else {
-      console.log("data", response);
       localStorage.setItem("user", JSON.stringify(response.data.data));
       dispatch(setUserDetails(response.data));
       navigate("/");
@@ -66,6 +65,7 @@ const logout = (navigate) => {
     localStorage.removeItem("user");
     dispatch(showAlert("Logged Out Successfully.", "success"));
     dispatch(setUserDetails(null));
+    disconnectFromSocket();
     navigate("/login");
   };
 };

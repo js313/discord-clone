@@ -10,13 +10,20 @@ export const friendsAction = {
 
 export const getActions = (dispatch) => {
   return {
-    sendFriendRequest: (data, closeDialogHandler) => {
-      dispatch(sendFriendRequest(data, closeDialogHandler));
+    sendFriendRequest: (data) => {
+      dispatch(sendFriendRequest(data));
     },
   };
 };
 
-const sendFriendRequest = (data, closeDialogHandler) => {
+export const setFriendRequests = (friendRequests) => {
+  return {
+    type: friendsAction.SET_FRIEND_REQUESTS,
+    payload: { friendRequests },
+  };
+};
+
+const sendFriendRequest = (data) => {
   return async (dispatch) => {
     const { response, success, error } = await sendFriendRequestApi(data);
     if (!success || !response.data.success) {
@@ -28,7 +35,6 @@ const sendFriendRequest = (data, closeDialogHandler) => {
       );
     } else {
       dispatch(showAlert("Invitation sent", "success"));
-      closeDialogHandler();
     }
   };
 };

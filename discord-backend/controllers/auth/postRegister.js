@@ -6,7 +6,7 @@ const postRegister = async (req, res) => {
   try {
     const { username, password, email } = req.body;
     // check if user already exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (user) {
       return res.status(400).json({
         success: false,

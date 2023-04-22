@@ -8,7 +8,7 @@ const verifySocketToken = (socket, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     socket.user = decoded;
-  } catch (err) {
+  } catch (error) {
     return next(new Error("Authentication error"));
   }
   next();
