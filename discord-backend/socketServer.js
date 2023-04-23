@@ -4,7 +4,10 @@ const {
   newConnectionHandler,
   removeConnectionHandler,
 } = require("./socketHandlers/newConnectionHandler");
-const { updateFriendRequests } = require("./socketHandlers/updates/friends");
+const {
+  updateFriendRequests,
+  updateFriendsList: updateFriendList,
+} = require("./socketHandlers/updates/friends");
 
 let io = null;
 
@@ -22,6 +25,7 @@ const registerSocketServer = (server) => {
     console.log("New client connected: " + socket.id);
     newConnectionHandler(socket, io);
     updateRequestList(socket.user.id, io);
+    updateFriendsList(socket.user.id, io);
     socket.on("disconnect", () => {
       removeConnectionHandler(socket, io);
       console.log("Client disconnected");
@@ -29,8 +33,12 @@ const registerSocketServer = (server) => {
   });
 };
 
-const updateRequestList = (socketId) => {
-  updateFriendRequests(socketId, io);
+const updateRequestList = (userId) => {
+  updateFriendRequests(userId, io);
 };
 
-module.exports = { registerSocketServer, updateRequestList };
+const updateFriendsList = (userId) => {
+  updateFriendList(userId, io);
+};
+
+module.exports = { registerSocketServer, updateRequestList, updateFriendsList };

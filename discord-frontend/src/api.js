@@ -76,3 +76,33 @@ export const sendFriendRequestApi = async (data) => {
     };
   }
 };
+
+export const acceptFriendRequestApi = async (data) => {
+  try {
+    const response = await apiClient.post("/friends/accept-request", {
+      id: data._id,
+    });
+    return { success: true, response };
+  } catch (error) {
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};
+
+export const rejectFriendRequestApi = async (data) => {
+  try {
+    const response = await apiClient.post("/friends/reject-request", {
+      id: data._id,
+    });
+    return { success: true, response };
+  } catch (error) {
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};

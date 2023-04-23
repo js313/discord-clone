@@ -4,7 +4,6 @@ const initState = {
   friends: [],
   friendRequests: [],
   onlineFriends: [],
-  friendRequestsSent: [],
 };
 
 const reducer = (state = initState, action) => {

@@ -1,24 +1,7 @@
 import { Divider, List, styled } from "@mui/material";
 import React from "react";
 import FriendsListItem from "./FriendsListItem";
-
-const dummyList = [
-  {
-    id: 1,
-    name: "John Doe",
-    online: true,
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    online: false,
-  },
-  {
-    id: 3,
-    name: "John Smith",
-    online: true,
-  },
-];
+import { connect } from "react-redux";
 
 const Wrapper = styled("div")(({ theme }) => ({
   flexGrow: 1,
@@ -26,11 +9,11 @@ const Wrapper = styled("div")(({ theme }) => ({
   overflow: "auto",
 }));
 
-const FriendsList = () => {
+const FriendsList = (props) => {
   return (
     <Wrapper>
       <List sx={{ width: "100%", bgcolor: "transparent" }} disablePadding>
-        {dummyList.map((friend) => (
+        {props.friends.map((friend) => (
           <React.Fragment key={friend.id}>
             <FriendsListItem key={friend.id} friend={friend} />
             <Divider variant="inset" component="li" />
@@ -41,4 +24,6 @@ const FriendsList = () => {
   );
 };
 
-export default FriendsList;
+export default connect((state) => {
+  return state.friend;
+})(FriendsList);

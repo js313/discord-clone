@@ -5,13 +5,17 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { connect } from "react-redux";
+import { getActions } from "../app/actions/friendsAction";
 
 const InvitationListItem = (props) => {
   const handleAcceptInvitation = () => {
+    props.acceptFriendRequest(props.invite);
     console.log("Accept invitation");
   };
 
   const handleRejectInvitation = () => {
+    props.rejectFriendRequest(props.invite);
     console.log("Reject invitation");
   };
 
@@ -44,4 +48,8 @@ const InvitationListItem = (props) => {
   );
 };
 
-export default InvitationListItem;
+export default connect(null, (dispatch) => {
+  return {
+    ...getActions(dispatch),
+  };
+})(InvitationListItem);

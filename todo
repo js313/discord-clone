@@ -1,5 +1,5 @@
 BE:-
-if user A has pending invitation from B do not let B send invite to A
+User can spam send requests after request rejection
 
 FE:-
 useffect in /login, /register to redirect if already logged in.

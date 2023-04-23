@@ -51,7 +51,10 @@ const sendFriendRequestController = async (req, res, next) => {
       .json({ success: true, message: "Request sent successfully." });
   } catch (error) {
     console.log(error);
-    next(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 

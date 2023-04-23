@@ -22,7 +22,8 @@ const FriendsListItem = (props) => {
                 height: "35px",
               }}
             >
-              {props.friend.name[0] + props.friend.name[1]}
+              {props.friend.username[0].toUpperCase() +
+                props.friend.username[1]}
             </Avatar>
           )}
         </ListItemAvatar>
@@ -31,7 +32,7 @@ const FriendsListItem = (props) => {
           sx={{ color: "white" }}
           primary={
             <Box sx={{ display: "flex", flex: 1 }}>
-              {props.friend.name}
+              {props.friend.username}
               <OnlineIndicator online={props.friend.online} />
             </Box>
           }

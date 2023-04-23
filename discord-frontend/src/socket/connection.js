@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import store from "../app/store";
-import { setFriendRequests } from "../app/actions/friendsAction";
+import { setFriendRequests, setFriends } from "../app/actions/friendsAction";
 
 let socket = null;
 
@@ -17,6 +17,10 @@ export const connectToSocket = (user) => {
   socket.on("friend-requests", (data) => {
     const friendRequests = data;
     store.dispatch(setFriendRequests(friendRequests));
+  });
+
+  socket.on("friends-list", (friends) => {
+    store.dispatch(setFriends(friends));
   });
 };
 
