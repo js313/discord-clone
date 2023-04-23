@@ -8,6 +8,7 @@ const {
   updateFriendRequests,
   updateFriendsList: updateFriendList,
 } = require("./socketHandlers/updates/friends");
+const User = require("./models/user");
 
 let io = null;
 
@@ -21,14 +22,22 @@ const registerSocketServer = (server) => {
   io.use((socket, next) => {
     authSocket(socket, next);
   });
-  io.on("connection", (socket) => {
-    console.log("New client connected: " + socket.id);
+  io.on("connection", async (socket) => {
+    // console.log("New client connected: " + socket.id);
     newConnectionHandler(socket, io);
     updateRequestList(socket.user.id, io);
+    const userFriends = (await User.findById(socket.user.id))?.friends || [];
+    userFriends.forEach((friendId) =>
+      updateFriendList(friendId.toString(), io)
+    );
+
     updateFriendsList(socket.user.id, io);
     socket.on("disconnect", () => {
+      userFriends.forEach((friendId) =>
+        updateFriendList(friendId.toString(), io)
+      );
       removeConnectionHandler(socket, io);
-      console.log("Client disconnected");
+      // console.log("Client disconnected");
     });
   });
 };
