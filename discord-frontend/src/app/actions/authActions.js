@@ -60,7 +60,7 @@ const register = (userDetails, navigate) => {
   };
 };
 
-const logout = (navigate) => {
+export const logout = (navigate) => {
   return async (dispatch) => {
     localStorage.removeItem("user");
     dispatch(showAlert("Logged Out Successfully.", "success"));

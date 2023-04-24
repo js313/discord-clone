@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout } from "./app/actions/authActions";
 import store from "./app/store";
 
 const apiClient = axios.create({
@@ -55,9 +56,13 @@ export const registerApi = async (username, email, password) => {
   }
 };
 
-const checkNotLoggedIn = (response) => {
+const checkNotLoggedIn = ({ response }) => {
   if (response.status === 401 || response.status === 403) {
-    store.auth.logout();
+    store.dispatch(
+      logout((path) => {
+        window.location.href = path;
+      })
+    );
   }
 };
 
