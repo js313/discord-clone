@@ -21,7 +21,7 @@ const acceptFriendRequest = async (req, res, next) => {
       }),
     ]);
     await FriendRequest.findByIdAndDelete(id);
-    updateRequestList(request.receiverId);
+    updateRequestList(request.receiverId.toString());
     //update friends list for both receiver and sender
     updateFriendsList(request.receiverId.toString());
     updateFriendsList(request.senderId.toString());

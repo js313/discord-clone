@@ -43,6 +43,7 @@ const registerSocketServer = (server) => {
 };
 
 const updateRequestList = (userId) => {
+  console.log(userId);
   updateFriendRequests(userId, io);
 };
 
