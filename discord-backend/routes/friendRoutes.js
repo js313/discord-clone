@@ -21,13 +21,13 @@ router.post(
 );
 
 const acceptFriendRequestLimiter = rateLimit({
-  windowMs: 5 * 1000, // 5 senonds
+  windowMs: 2 * 1000, // 2 senonds
   max: 1, // allow only 1 request per windowMs
 });
 
 router.post(
   "/accept-request",
-  acceptFriendRequestLimiter,
+  acceptFriendRequestLimiter, //to prevent spamming accept friend request
   validator.body(friendRequestDecisionSchema),
   friendController.controllers.acceptFriendRequest
 );
