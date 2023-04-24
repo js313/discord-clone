@@ -12,6 +12,19 @@ const acceptFriendRequest = async (req, res, next) => {
         message: "Request not found",
       });
     }
+    // check if already friends
+    const alreadyFriends = await User.find({
+      $or: [
+        { $and: [{ _id: request.senderId }, { friends: request.receiverId }] },
+        { $and: [{ _id: request.receiverId }, { friends: request.senderId }] },
+      ],
+    });
+    if (alreadyFriends && alreadyFriends.length > 0) {
+      return res.status(409).json({
+        success: false,
+        message: "Already friends with user",
+      });
+    }
     await Promise.all([
       User.findByIdAndUpdate(request.senderId, {
         $push: { friends: request.receiverId },

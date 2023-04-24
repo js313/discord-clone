@@ -9,19 +9,20 @@ import { connect } from "react-redux";
 import { getActions } from "../app/actions/friendsAction";
 
 const InvitationListItem = (props) => {
+  const [open, setOpen] = React.useState(true);
   const handleAcceptInvitation = () => {
+    setOpen(false);
     props.acceptFriendRequest(props.invite);
-    console.log("Accept invitation");
   };
 
   const handleRejectInvitation = () => {
+    setOpen(false);
     props.rejectFriendRequest(props.invite);
-    console.log("Reject invitation");
   };
 
   return (
     <ListItem
-      sx={{ color: "white" }}
+      sx={{ color: "white", display: open ? "flex" : "none" }}
       secondaryAction={
         <>
           <IconButton

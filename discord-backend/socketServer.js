@@ -32,7 +32,9 @@ const registerSocketServer = (server) => {
     );
 
     updateFriendsList(socket.user.id, io);
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
+      //Have to get the list here again to check for newly added friends while the user was online
+      const userFriends = (await User.findById(socket.user.id))?.friends || [];
       userFriends.forEach((friendId) =>
         updateFriendList(friendId.toString(), io)
       );
@@ -43,7 +45,6 @@ const registerSocketServer = (server) => {
 };
 
 const updateRequestList = (userId) => {
-  console.log(userId);
   updateFriendRequests(userId, io);
 };
 
