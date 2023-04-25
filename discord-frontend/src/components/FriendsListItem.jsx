@@ -5,27 +5,35 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { Box, ListItemButton } from "@mui/material";
 import OnlineIndicator from "./OnlineIndicator";
+import { chatTypes, getActions } from "../app/actions/chatActions";
+import { connect } from "react-redux";
 
 const FriendsListItem = (props) => {
+  const handleChooseActiveChat = () => {
+    props.setChatDetails(
+      { id: props.friend.id, username: props.friend.username },
+      chatTypes.DIRECT
+    );
+  };
+
   return (
     <>
-      <ListItemButton disableGutters sx={{ p: 0, px: 0.5 }}>
+      <ListItemButton
+        disableGutters
+        sx={{ p: 0, px: 0.5 }}
+        onClick={handleChooseActiveChat}
+      >
         <ListItemAvatar>
-          {props.friend.image ? (
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          ) : (
-            <Avatar
-              sx={{
-                backgroundColor: "red",
-                fontSize: "15px",
-                width: "35px",
-                height: "35px",
-              }}
-            >
-              {props.friend.username[0].toUpperCase() +
-                props.friend.username[1]}
-            </Avatar>
-          )}
+          <Avatar
+            sx={{
+              backgroundColor: "red",
+              fontSize: "15px",
+              width: "35px",
+              height: "35px",
+            }}
+          >
+            {props.friend.username[0].toUpperCase() + props.friend.username[1]}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           disableTypography
@@ -53,4 +61,6 @@ const FriendsListItem = (props) => {
   );
 };
 
-export default FriendsListItem;
+export default connect(null, (dispatch) => {
+  return { ...getActions(dispatch) };
+})(FriendsListItem);

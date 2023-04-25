@@ -1,5 +1,8 @@
 import React from "react";
 import { styled } from "@mui/system";
+import { connect } from "react-redux";
+import WelcomeMessage from "./WelcomeMessage";
+import MessageContent from "./MessageContent";
 
 const Wrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -8,8 +11,18 @@ const Wrapper = styled("div")(({ theme }) => ({
   marginTop: "48px",
 }));
 
-const Messenger = () => {
-  return <Wrapper>Messenger</Wrapper>;
+const Messenger = (props) => {
+  return (
+    <Wrapper>
+      {!props.chatDetails ? (
+        <WelcomeMessage />
+      ) : (
+        <MessageContent details={props.chatDetails} />
+      )}
+    </Wrapper>
+  );
 };
 
-export default Messenger;
+export default connect((state) => {
+  return state.chat;
+})(Messenger);

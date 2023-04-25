@@ -27,3 +27,8 @@ export const connectToSocket = (user) => {
 export const disconnectFromSocket = () => {
   if (socket) socket.disconnect();
 };
+
+export const sendDirectMessage = (data) => {
+  console.log("Sending direct message", data);
+  socket.emit("direct-message", data);
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import DropdownMenu from "./DropdownMenu";
+import ChosenChat from "./ChosenChat";
 
 const Wrapper = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -18,6 +19,7 @@ const Wrapper = styled("div")(({ theme }) => ({
 const AppBar = () => {
   return (
     <Wrapper>
+      <ChosenChat />
       <DropdownMenu />
     </Wrapper>
   );
