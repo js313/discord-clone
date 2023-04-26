@@ -7,7 +7,6 @@ const directMessageHandler = async (socket, io, data) => {
   try {
     const senderId = socket.user.id;
     const { receiverId, content } = data;
-
     // Save message to database
     const message = await Message.create({
       sender: senderId,
@@ -22,7 +21,7 @@ const directMessageHandler = async (socket, io, data) => {
     // if conversation exists, add message to conversation
     // else create new conversation and add message to conversation
     if (conversation) {
-      conversation.messages.push(message._id);
+      conversation.messages = [message._id, ...conversation.messages];
       await conversation.save();
     } else {
       conversation = await Conversation.create({

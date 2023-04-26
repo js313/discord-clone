@@ -1,7 +1,10 @@
 BE:-
 User can spam send requests after request rejection.
+(BUG) Check if user logged in on direct message socket event
 
 FE:-
 useffect in /login, /register to redirect if already logged in.
 Revise redux, store and actions, how it is implemented.
 Scrolling pagination for messages
+
+(NOTE):- Slow response as mongodb atlas taking too long to save messages

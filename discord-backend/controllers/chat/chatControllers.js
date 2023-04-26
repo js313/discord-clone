@@ -15,10 +15,6 @@ exports.getChatByReceiverId = async (req, res) => {
       },
     });
 
-    if (!conversation) {
-      return res.status(404).json({ message: "Conversation not found" });
-    }
-
     res.status(200).json({ conversation });
   } catch (error) {
     console.log(error);

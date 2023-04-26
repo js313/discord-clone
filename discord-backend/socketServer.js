@@ -8,11 +8,7 @@ const {
   updateFriendRequests,
   updateFriendsList: updateFriendList,
 } = require("./socketHandlers/updates/friends");
-const User = require("./models/user");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
-const { connectedUsers } = require("./serverStore");
-const updateChatHistory = require("./socketHandlers/updates/chat");
-const Conversation = require("./models/conversation");
 
 let io = null;
 

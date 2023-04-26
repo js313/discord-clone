@@ -11,10 +11,12 @@ import { getChatHistoryApi } from "../api";
 
 const FriendsListItem = (props) => {
   const handleChooseActiveChat = async () => {
+    if (props.friend.id === props.chatDetails?.id) return;
     props.setChatDetails(
       { id: props.friend.id, username: props.friend.username },
       chatTypes.DIRECT
     );
+    props.setMessages([]);
     const response = await getChatHistoryApi(props.friend.id);
     props.setMessages(response.messages);
   };
@@ -64,6 +66,11 @@ const FriendsListItem = (props) => {
   );
 };
 
-export default connect(null, (dispatch) => {
-  return { ...getActions(dispatch) };
-})(FriendsListItem);
+export default connect(
+  (state) => {
+    return state.chat;
+  },
+  (dispatch) => {
+    return { ...getActions(dispatch) };
+  }
+)(FriendsListItem);

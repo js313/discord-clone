@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { styled } from "@mui/system";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Divider, Typography } from "@mui/material";
 
 const Wrapper = styled("div")(({ theme }) => ({
   height: "calc(100% - 60px)",
@@ -20,11 +20,19 @@ const MainContainer = styled("div")(({ theme }) => ({
 const Messages = (props) => {
   return (
     <Wrapper>
-      {props.messages
-        .slice(0)
-        .reverse()
-        .map((message) => {
-          if (message.sameDay && message.sameAuthor) {
+      {props.messages &&
+        props.messages.map((message, index) => {
+          const curDate = new Date(props.messages[index].date).toDateString();
+          const nextDate =
+            index < props.messages.length - 1
+              ? new Date(props.messages[index + 1].date).toDateString()
+              : "";
+          if (
+            index < props.messages.length - 1 &&
+            props.messages[index].sender._id ===
+              props.messages[index + 1].sender._id &&
+            curDate === nextDate
+          ) {
             return (
               <Box
                 key={message._id}
@@ -40,31 +48,49 @@ const Messages = (props) => {
             );
           }
           return (
-            <MainContainer key={message._id}>
-              <Avatar
-                sx={{
-                  backgroundColor: "red",
-                  fontSize: "14px",
-                  width: "35px",
-                  height: "35px",
-                  mr: "10px",
-                }}
-              >
-                {message.sender.username[0].toUpperCase() +
-                  message.sender.username[1]}
-              </Avatar>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography sx={{ fontSize: "13px", color: "white" }}>
-                  {`${message.sender.username} `}
-                  <span style={{ fontSize: "12px", color: "grey" }}>
-                    {message.date}
-                  </span>
-                </Typography>
-                <div style={{ fontSize: "14px", color: "#DCDDDE" }}>
-                  {message.content}
-                </div>
-              </Box>
-            </MainContainer>
+            <React.Fragment key={message._id}>
+              <MainContainer key={message._id}>
+                <Avatar
+                  sx={{
+                    backgroundColor: "red",
+                    fontSize: "14px",
+                    width: "35px",
+                    height: "35px",
+                    mr: "10px",
+                  }}
+                >
+                  {message.sender.username[0].toUpperCase() +
+                    message.sender.username[1]}
+                </Avatar>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography sx={{ fontSize: "13px", color: "white" }}>
+                    {`${message.sender.username} `}
+                    <span style={{ fontSize: "12px", color: "grey" }}>
+                      {message.date}
+                    </span>
+                  </Typography>
+                  <div style={{ fontSize: "14px", color: "#DCDDDE" }}>
+                    {message.content}
+                  </div>
+                </Box>
+              </MainContainer>
+              {curDate !== nextDate && (
+                <Divider
+                  sx={{
+                    "&::before, &::after": {
+                      position: "static",
+                      borderColor: "gray",
+                    },
+                  }}
+                  variant="middle"
+                >
+                  <Chip
+                    label={curDate}
+                    sx={{ color: "whitesmoke", fontSize: "10px" }}
+                  />
+                </Divider>
+              )}
+            </React.Fragment>
           );
         })}
     </Wrapper>
