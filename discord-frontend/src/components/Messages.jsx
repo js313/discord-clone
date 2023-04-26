@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { styled } from "@mui/system";
 import { Avatar, Box, Chip, Divider, Typography } from "@mui/material";
@@ -18,20 +18,31 @@ const MainContainer = styled("div")(({ theme }) => ({
 }));
 
 const Messages = (props) => {
+  const lastMessageRef = React.useRef(null);
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [props.messages]);
   return (
     <Wrapper>
       {props.messages &&
         props.messages.map((message, index) => {
-          const curDate = new Date(props.messages[index].date).toDateString();
+          const curDate = new Date(props.messages[index].date);
           const nextDate =
             index < props.messages.length - 1
-              ? new Date(props.messages[index + 1].date).toDateString()
-              : "";
+              ? new Date(props.messages[index + 1].date)
+              : undefined;
+
           if (
             index < props.messages.length - 1 &&
             props.messages[index].sender._id ===
               props.messages[index + 1].sender._id &&
-            curDate === nextDate
+            nextDate &&
+            curDate.toDateString() + curDate.toTimeString().slice(0, 5) ===
+              nextDate.toDateString() + nextDate.toTimeString().slice(0, 5)
           ) {
             return (
               <Box
@@ -42,6 +53,7 @@ const Messages = (props) => {
                   marginLeft: "45px",
                   marginTop: "5px",
                 }}
+                ref={index === 0 ? lastMessageRef : null}
               >
                 {message.content}
               </Box>
@@ -49,7 +61,7 @@ const Messages = (props) => {
           }
           return (
             <React.Fragment key={message._id}>
-              <MainContainer key={message._id}>
+              <MainContainer ref={index === 0 ? lastMessageRef : null}>
                 <Avatar
                   sx={{
                     backgroundColor: "red",
@@ -66,7 +78,7 @@ const Messages = (props) => {
                   <Typography sx={{ fontSize: "13px", color: "white" }}>
                     {`${message.sender.username} `}
                     <span style={{ fontSize: "12px", color: "grey" }}>
-                      {message.date}
+                      {new Date(message.date).toTimeString().slice(0, 5)}
                     </span>
                   </Typography>
                   <div style={{ fontSize: "14px", color: "#DCDDDE" }}>
@@ -74,7 +86,8 @@ const Messages = (props) => {
                   </div>
                 </Box>
               </MainContainer>
-              {curDate !== nextDate && (
+              {!nextDate ||
+              curDate.toDateString() !== nextDate.toDateString() ? (
                 <Divider
                   sx={{
                     "&::before, &::after": {
@@ -85,11 +98,11 @@ const Messages = (props) => {
                   variant="middle"
                 >
                   <Chip
-                    label={curDate}
+                    label={curDate.toDateString()}
                     sx={{ color: "whitesmoke", fontSize: "10px" }}
                   />
                 </Divider>
-              )}
+              ) : null}
             </React.Fragment>
           );
         })}
