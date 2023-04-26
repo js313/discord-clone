@@ -9,6 +9,10 @@ const {
   updateFriendsList: updateFriendList,
 } = require("./socketHandlers/updates/friends");
 const User = require("./models/user");
+const directMessageHandler = require("./socketHandlers/directMessageHandler");
+const { connectedUsers } = require("./serverStore");
+const updateChatHistory = require("./socketHandlers/updates/chat");
+const Conversation = require("./models/conversation");
 
 let io = null;
 
@@ -25,19 +29,12 @@ const registerSocketServer = (server) => {
   io.on("connection", async (socket) => {
     // console.log("New client connected: " + socket.id);
     newConnectionHandler(socket, io);
-    updateRequestList(socket.user.id, io);
-    const userFriends = (await User.findById(socket.user.id))?.friends || [];
-    userFriends.forEach((friendId) =>
-      updateFriendList(friendId.toString(), io)
+
+    socket.on("direct-message", (data) =>
+      directMessageHandler(socket, io, data)
     );
 
-    updateFriendsList(socket.user.id, io);
     socket.on("disconnect", async () => {
-      //Have to get the list here again to check for newly added friends while the user was online
-      const userFriends = (await User.findById(socket.user.id))?.friends || [];
-      userFriends.forEach((friendId) =>
-        updateFriendList(friendId.toString(), io)
-      );
       removeConnectionHandler(socket, io);
       // console.log("Client disconnected");
     });

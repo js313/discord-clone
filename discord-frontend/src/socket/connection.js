@@ -1,6 +1,7 @@
 import io from "socket.io-client";
 import store from "../app/store";
 import { setFriendRequests, setFriends } from "../app/actions/friendsAction";
+import { setMessages } from "../app/actions/chatActions";
 
 let socket = null;
 
@@ -22,6 +23,10 @@ export const connectToSocket = (user) => {
   socket.on("friends-list", (friends) => {
     store.dispatch(setFriends(friends));
   });
+
+  socket.on("update-chat-history", (data) => {
+    store.dispatch(setMessages(data.messages));
+  });
 };
 
 export const disconnectFromSocket = () => {
@@ -29,6 +34,5 @@ export const disconnectFromSocket = () => {
 };
 
 export const sendDirectMessage = (data) => {
-  console.log("Sending direct message", data);
   socket.emit("direct-message", data);
 };

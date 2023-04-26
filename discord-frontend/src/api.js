@@ -105,3 +105,19 @@ export const rejectFriendRequestApi = async (data) => {
     };
   }
 };
+
+export const getChatHistoryApi = async (receiverId) => {
+  try {
+    const response = await apiClient.get(`/chat/${receiverId}`);
+    return {
+      success: true,
+      messages: response.data?.conversation?.messages || [],
+    };
+  } catch (error) {
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};

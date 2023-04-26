@@ -30,6 +30,7 @@ app.use(morgan("dev"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use(verifyToken);
 app.use("/api/friends", require("./routes/friendRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 app.use(verifyToken);
 

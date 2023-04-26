@@ -7,13 +7,16 @@ import { Box, ListItemButton } from "@mui/material";
 import OnlineIndicator from "./OnlineIndicator";
 import { chatTypes, getActions } from "../app/actions/chatActions";
 import { connect } from "react-redux";
+import { getChatHistoryApi } from "../api";
 
 const FriendsListItem = (props) => {
-  const handleChooseActiveChat = () => {
+  const handleChooseActiveChat = async () => {
     props.setChatDetails(
       { id: props.friend.id, username: props.friend.username },
       chatTypes.DIRECT
     );
+    const response = await getChatHistoryApi(props.friend.id);
+    props.setMessages(response.messages);
   };
 
   return (

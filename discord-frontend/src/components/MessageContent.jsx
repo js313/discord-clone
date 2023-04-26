@@ -15,6 +15,7 @@ const MessageContent = (props) => {
   return (
     <Wrapper>
       <Messages details={props.details} />
+      <div style={{ height: "12px" }} />
       <MessageInput />
     </Wrapper>
   );

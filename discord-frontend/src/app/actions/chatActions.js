@@ -14,6 +14,9 @@ export const getActions = (dispatch) => {
     setChatDetails: (details, type) => {
       dispatch(setChatDetails(details, type));
     },
+    setMessages: (messages) => {
+      dispatch(setMessages(messages));
+    },
   };
 };
 
@@ -27,7 +30,7 @@ export const setChatDetails = (details, type) => {
   };
 };
 
-export const setMesssages = (messages) => {
+export const setMessages = (messages) => {
   return {
     type: chatActions.SET_MESSAGES,
     payload: messages,
