@@ -25,13 +25,13 @@ const FriendsListItem = (props) => {
     <>
       <ListItemButton
         disableGutters
-        sx={{ p: 0, px: 0.5 }}
+        sx={{ p: 0, px: 1 }}
         onClick={handleChooseActiveChat}
       >
         <ListItemAvatar>
           <Avatar
             sx={{
-              backgroundColor: "red",
+              backgroundColor: `${props.friend.imageBackground || "#7289da"}`,
               fontSize: "15px",
               width: "35px",
               height: "35px",

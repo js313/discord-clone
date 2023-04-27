@@ -3,7 +3,6 @@ import { friendsAction } from "../actions/friendsAction";
 const initState = {
   friends: [],
   friendRequests: [],
-  onlineFriends: [],
 };
 
 const reducer = (state = initState, action) => {
@@ -17,11 +16,6 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         friendRequests: action.payload.friendRequests,
-      };
-    case friendsAction.SET_ONLINE_FRIENDS:
-      return {
-        ...state,
-        onlineFriends: action.payload.onlineFriends,
       };
     default: {
       return state;

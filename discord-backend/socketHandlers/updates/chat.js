@@ -7,7 +7,7 @@ const updateChatHistory = async (conversationId, toSockets, io) => {
     populate: {
       path: "sender",
       model: "User",
-      select: "username _id",
+      select: "username _id image imageBackground",
     },
   });
 

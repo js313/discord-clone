@@ -11,7 +11,7 @@ exports.getChatByReceiverId = async (req, res) => {
       path: "messages",
       populate: {
         path: "sender",
-        select: "username _id",
+        select: "username _id image imageBackground",
       },
     });
 

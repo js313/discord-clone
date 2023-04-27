@@ -7,7 +7,7 @@ exports.updateFriendRequests = async (userId, io) => {
   try {
     const friendRequests = await FriendRequest.find({
       receiverId: userId,
-    }).populate("senderId", "_id username email");
+    }).populate("senderId", "_id username email image imageBackground");
     emitEvent("friend-requests", userId, io, friendRequests);
   } catch (error) {
     console.log(error);
@@ -27,6 +27,8 @@ exports.updateFriendsList = async (userId, io) => {
           username: friendData.username,
           email: friendData.email,
           online: isOnline(friendData.id),
+          image: friendData.image,
+          imageBackground: friendData.imageBackground,
         };
       })
     );

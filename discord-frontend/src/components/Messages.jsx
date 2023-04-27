@@ -64,7 +64,9 @@ const Messages = (props) => {
               <MainContainer ref={index === 0 ? lastMessageRef : null}>
                 <Avatar
                   sx={{
-                    backgroundColor: "red",
+                    backgroundColor: `${
+                      message.sender.imageBackground || "#7289DA"
+                    }`,
                     fontSize: "14px",
                     width: "35px",
                     height: "35px",

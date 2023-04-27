@@ -20,6 +20,7 @@ const postRegister = async (req, res) => {
       username,
       password: hashedPassword,
       email: email.toLowerCase(),
+      imageBackground: "#" + Math.floor(Math.random() * 16777215).toString(16),
     });
     // save user to db
     await newUser.save();
