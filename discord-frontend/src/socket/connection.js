@@ -1,7 +1,8 @@
 import io from "socket.io-client";
 import store from "../app/store";
-import { setFriendRequests, setFriends } from "../app/actions/friendsAction";
+import { setFriendRequests, setFriends } from "../app/actions/friendsActions";
 import { setMessages } from "../app/actions/chatActions";
+import { setGroups } from "../app/actions/groupActions";
 
 let socket = null;
 
@@ -22,6 +23,11 @@ export const connectToSocket = (user) => {
 
   socket.on("friends-list", (friends) => {
     store.dispatch(setFriends(friends));
+  });
+
+  socket.on("groups-list", (groups) => {
+    console.log(groups);
+    store.dispatch(setGroups(groups));
   });
 
   socket.on("update-chat-history", (data) => {

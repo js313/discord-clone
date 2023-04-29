@@ -121,3 +121,22 @@ export const getChatHistoryApi = async (receiverId) => {
     };
   }
 };
+
+export const createNewGroupApi = async (data) => {
+  try {
+    const response = await apiClient.post(`/group`, {
+      name: data.name,
+      description: data.description,
+    });
+    return {
+      success: true,
+      response,
+    };
+  } catch (error) {
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};

@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Avatar, Tooltip } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { connect } from "react-redux";
-import { getActions } from "../app/actions/friendsAction";
+import { getActions } from "../app/actions/friendsActions";
 
 const InvitationListItem = (props) => {
   const handleAcceptInvitation = () => {

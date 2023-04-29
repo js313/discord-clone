@@ -5,12 +5,14 @@ import authReducer from "./reducers/authReducer";
 import alertReducer from "./reducers/alertReducer";
 import friendsReducer from "./reducers/friendsReducer";
 import chatReducer from "./reducers/chatReducer";
+import groupReducer from "./reducers/groupReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
   friend: friendsReducer,
   chat: chatReducer,
+  group: groupReducer,
 });
 
 const store = configureStore({

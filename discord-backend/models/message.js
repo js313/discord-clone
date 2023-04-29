@@ -23,6 +23,14 @@ const messageSchema = new mongoose.Schema({
     enum: ["text", "image", "video", "audio"],
     default: "text",
   },
+  group: {
+    type: mongoose.Types.ObjectId,
+    ref: "Group",
+  },
+  receiver: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Message = mongoose.model("Message", messageSchema);

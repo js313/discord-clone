@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@mui/system";
 import AddFriendButton from "./AddFriendButton";
 import FriendsTitle from "./FriendsTitle";
-import FriendsList from "./FriendsList";
+import ConversationList from "./ConversationList";
 import InvitationList from "./InvitationList";
 
 const Wrapper = styled("div")(({ theme }) => ({
@@ -19,7 +19,7 @@ const FriendsSidebar = () => {
     <Wrapper>
       <AddFriendButton />
       <FriendsTitle title="Private Messages" />
-      <FriendsList />
+      <ConversationList />
       <FriendsTitle title="Invitations" />
       <InvitationList />
     </Wrapper>

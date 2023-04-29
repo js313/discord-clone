@@ -31,5 +31,6 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use(verifyToken);
 app.use("/api/friends", require("./routes/friendRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/group", require("./routes/groupRoutes"));
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));

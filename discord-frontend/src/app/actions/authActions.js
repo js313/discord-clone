@@ -1,7 +1,7 @@
 import { loginApi, registerApi } from "../../api";
 import { disconnectFromSocket } from "../../socket/connection";
 import { showAlert } from "./alertActions";
-import { setFriendRequests, setFriends } from "./friendsAction";
+import { setFriendRequests, setFriends } from "./friendsActions";
 
 const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",

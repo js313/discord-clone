@@ -4,6 +4,7 @@ const {
   updateFriendRequests,
   updateFriendsList,
 } = require("./updates/friends");
+const { updateGroupList } = require("./updates/group");
 
 const newConnectionHandler = async (socket, io) => {
   const user = socket.user;
@@ -11,6 +12,7 @@ const newConnectionHandler = async (socket, io) => {
   serverStore.addUser(user.id, socket.id);
 
   updateFriendRequests(socket.user.id, io);
+  updateGroupList(socket.user.id, io);
   const userFriends = (await User.findById(socket.user.id))?.friends || [];
   userFriends.forEach((friendId) => updateFriendsList(friendId.toString(), io));
   updateFriendsList(socket.user.id, io);

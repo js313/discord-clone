@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { getActions } from "../app/actions/friendsAction";
+import { getActions } from "../app/actions/friendsActions";
 
 const AddFriendDialog = (props) => {
   const [email, setEmail] = useState("");

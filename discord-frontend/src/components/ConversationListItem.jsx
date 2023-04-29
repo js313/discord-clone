@@ -9,15 +9,15 @@ import { chatTypes, getActions } from "../app/actions/chatActions";
 import { connect } from "react-redux";
 import { getChatHistoryApi } from "../api";
 
-const FriendsListItem = (props) => {
+const ConversationListItem = (props) => {
   const handleChooseActiveChat = async () => {
-    if (props.friend.id === props.chatDetails?.id) return;
+    if (props.conversation.id === props.chatDetails?.id) return;
     props.setChatDetails(
-      { id: props.friend.id, username: props.friend.username },
+      { id: props.conversation.id, username: props.conversation.username },
       chatTypes.DIRECT
     );
     props.setMessages([]);
-    const response = await getChatHistoryApi(props.friend.id);
+    const response = await getChatHistoryApi(props.conversation.id);
     props.setMessages(response.messages);
   };
 
@@ -31,13 +31,16 @@ const FriendsListItem = (props) => {
         <ListItemAvatar>
           <Avatar
             sx={{
-              backgroundColor: `${props.friend.imageBackground || "#7289da"}`,
+              backgroundColor: `${
+                props.conversation.imageBackground || "#7289da"
+              }`,
               fontSize: "15px",
               width: "35px",
               height: "35px",
             }}
           >
-            {props.friend.username[0].toUpperCase() + props.friend.username[1]}
+            {props.conversation.username[0].toUpperCase() +
+              props.conversation.username[1].toLowerCase()}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -45,8 +48,8 @@ const FriendsListItem = (props) => {
           sx={{ color: "white" }}
           primary={
             <Box sx={{ display: "flex", flex: 1 }}>
-              {props.friend.username}
-              <OnlineIndicator online={props.friend.online} />
+              {props.conversation.username}
+              <OnlineIndicator online={props.conversation.online} />
             </Box>
           }
           primaryTypographyProps={{ fontSize: "13px" }}
@@ -73,4 +76,4 @@ export default connect(
   (dispatch) => {
     return { ...getActions(dispatch) };
   }
-)(FriendsListItem);
+)(ConversationListItem);

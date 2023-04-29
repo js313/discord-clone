@@ -9,6 +9,7 @@ const {
   updateFriendsList: updateFriendList,
 } = require("./socketHandlers/updates/friends");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
+const { updateGroupList } = require("./socketHandlers/updates/group");
 
 let io = null;
 
@@ -45,4 +46,13 @@ const updateFriendsList = (userId) => {
   updateFriendList(userId, io);
 };
 
-module.exports = { registerSocketServer, updateRequestList, updateFriendsList };
+const updateGroupsList = (userId) => {
+  updateGroupList(userId, io);
+};
+
+module.exports = {
+  registerSocketServer,
+  updateRequestList,
+  updateFriendsList,
+  updateGroupsList,
+};
