@@ -52,7 +52,6 @@ exports.getGroup = async (req, res) => {
       _id: groupId,
       "members.user": memberId,
     }).lean();
-    console.log(group);
     let messages = [];
     if (group) {
       const member = group.members.find((member) => {

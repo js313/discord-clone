@@ -11,4 +11,6 @@ Do not send messages using socket.io, use REST API, let server emit it in real t
 (BUG):-
 (VIMP)Messages pushed to users that have not opened that group or conversation.
 
-(NOTE):- Slow response as mongodb atlas taking too long to save messages
+(NOTE):-
+Slow response as mongodb atlas taking too long to save messages
+Online idicator does not go offline when user logs out because SrictMode creates 2 socketIds

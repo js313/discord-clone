@@ -21,8 +21,8 @@ const newConnectionHandler = async (socket, io) => {
 const removeConnectionHandler = async (socket, io) => {
   //Have to get the list here again to check for newly added friends while the user was online
   const userFriends = (await User.findById(socket.user.id))?.friends || [];
-  userFriends.forEach((friendId) => updateFriendsList(friendId.toString(), io));
   serverStore.removeUser(socket.user.id, socket.id);
+  userFriends.forEach((friendId) => updateFriendsList(friendId.toString(), io));
 };
 
 module.exports = { newConnectionHandler, removeConnectionHandler };
