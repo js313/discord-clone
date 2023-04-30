@@ -9,15 +9,15 @@ const directMessageHandler = async (socket, io, data) => {
     const { receiverId, content } = data;
 
     let conversation = await Conversation.findOne({
-      sender: senderId,
-      receiver: receiverId,
+      $or: [
+        { $and: [{ user1: senderId }, { user2: receiverId }] },
+        { $and: [{ user1: receiverId }, { user2: senderId }] },
+      ],
     });
-    // if conversation exists, add message to conversation
-    // else create new conversation and add message to conversation
     if (!conversation) {
       conversation = await Conversation.create({
-        sender: senderId,
-        receiver: receiverId,
+        user1: senderId,
+        user2: receiverId,
       });
     }
     const message = await Message.create({
@@ -33,7 +33,7 @@ const directMessageHandler = async (socket, io, data) => {
       ...(connectedUsers.get(senderId) || []),
     ];
     if (socketIds) {
-      updateChatHistory(conversation._id, socketIds, io);
+      updateChatHistory(conversation, socketIds, io);
     }
   } catch (error) {
     console.log(error);

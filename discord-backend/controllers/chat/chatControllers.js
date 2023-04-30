@@ -9,8 +9,10 @@ exports.getChat = async (req, res) => {
     const { receiverId } = req.params;
 
     const conversation = await Conversation.findOne({
-      sender: senderId,
-      receiver: receiverId,
+      $or: [
+        { $and: [{ user1: senderId }, { user2: receiverId }] },
+        { $and: [{ user1: receiverId }, { user2: senderId }] },
+      ],
     }).lean();
 
     let messages = [];
@@ -43,17 +45,18 @@ exports.getChat = async (req, res) => {
 
 exports.getGroup = async (req, res) => {
   try {
-    const senderId = req.user.id;
+    const memberId = req.user.id;
     const { id: groupId } = req.params;
 
     const group = await Group.findOne({
       _id: groupId,
-      "members.user": senderId,
+      "members.user": memberId,
     }).lean();
+    console.log(group);
     let messages = [];
     if (group) {
       const member = group.members.find((member) => {
-        return member.user.toString() === senderId;
+        return member.user.toString() === memberId;
       });
       messages = await Message.find({
         group: groupId,

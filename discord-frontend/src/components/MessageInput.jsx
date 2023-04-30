@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { connect } from "react-redux";
-import { getActions } from "../app/actions/chatActions";
-import { sendDirectMessage } from "../socket/connection";
+import { chatTypes, getActions } from "../app/actions/chatActions";
+import { sendDirectMessage, sendGroupMessage } from "../socket/connection";
 
 const Wrapper = styled("div")(({ theme }) => ({
   width: "100%",
@@ -31,10 +31,15 @@ const MessageInput = (props) => {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter" && message) {
-      sendDirectMessage({
-        receiverId: props.chatDetails.id,
-        content: message,
-      });
+      props.chatType === chatTypes.DIRECT
+        ? sendDirectMessage({
+            receiverId: props.chatDetails.id,
+            content: message,
+          })
+        : sendGroupMessage({
+            groupId: props.chatDetails.id,
+            content: message,
+          });
       setMessage("");
     }
   };

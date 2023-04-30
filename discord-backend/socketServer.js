@@ -10,6 +10,7 @@ const {
 } = require("./socketHandlers/updates/friends");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
 const { updateGroupList } = require("./socketHandlers/updates/group");
+const groupMessageHandler = require("./socketHandlers/groupMessageHandler");
 
 let io = null;
 
@@ -30,6 +31,8 @@ const registerSocketServer = (server) => {
     socket.on("direct-message", (data) =>
       directMessageHandler(socket, io, data)
     );
+
+    socket.on("group-message", (data) => groupMessageHandler(socket, io, data));
 
     socket.on("disconnect", async () => {
       removeConnectionHandler(socket, io);

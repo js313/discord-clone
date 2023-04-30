@@ -32,6 +32,10 @@ export const connectToSocket = (user) => {
   socket.on("update-chat-history", (data) => {
     store.dispatch(setMessages(data.messages));
   });
+
+  socket.on("update-group-history", (data) => {
+    store.dispatch(setMessages(data.messages));
+  });
 };
 
 export const disconnectFromSocket = () => {
@@ -40,4 +44,8 @@ export const disconnectFromSocket = () => {
 
 export const sendDirectMessage = (data) => {
   socket.emit("direct-message", data);
+};
+
+export const sendGroupMessage = (data) => {
+  socket.emit("group-message", data);
 };
