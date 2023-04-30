@@ -111,7 +111,7 @@ export const getChatHistoryApi = async (receiverId) => {
     const response = await apiClient.get(`/chat/${receiverId}`);
     return {
       success: true,
-      messages: response.data?.conversation?.messages || [],
+      messages: response.data?.data?.messages || [],
     };
   } catch (error) {
     checkNotLoggedIn(error);
@@ -131,6 +131,22 @@ export const createNewGroupApi = async (data) => {
     return {
       success: true,
       response,
+    };
+  } catch (error) {
+    checkNotLoggedIn(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};
+
+export const getGroupHistoryApi = async (groupId) => {
+  try {
+    const { data } = await apiClient.get(`/group/${groupId}`);
+    return {
+      success: true,
+      messages: data.data.messages,
     };
   } catch (error) {
     checkNotLoggedIn(error);

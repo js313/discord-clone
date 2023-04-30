@@ -1,18 +1,20 @@
 const Conversation = require("../../models/conversation");
+const Message = require("../../models/message");
 
 const updateChatHistory = async (conversationId, toSockets, io) => {
-  const conversation = await Conversation.findById(conversationId).populate({
-    path: "messages",
-    model: "Message",
-    populate: {
+  //optimise
+  const conversation = await Conversation.findById(conversationId);
+  const messages = await Message.find({
+    conversation: conversationId,
+  })
+    .sort({ date: -1 })
+    .populate({
       path: "sender",
-      model: "User",
-      select: "username _id image imageBackground",
-    },
-  });
+      select: "imageBackground _id username",
+    });
 
   toSockets.forEach((socketId) => {
-    io.to(socketId).emit("update-chat-history", conversation);
+    io.to(socketId).emit("update-chat-history", { ...conversation, messages });
   });
 };
 

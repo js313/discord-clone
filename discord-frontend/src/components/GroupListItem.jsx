@@ -7,17 +7,21 @@ import { Box, ListItemButton } from "@mui/material";
 import OnlineIndicator from "./OnlineIndicator";
 import { chatTypes, getActions } from "../app/actions/chatActions";
 import { connect } from "react-redux";
-import { getChatHistoryApi } from "../api";
+import { getGroupHistoryApi } from "../api";
 
 const GroupListItem = (props) => {
-  const handleChooseActiveChat = async () => {
-    if (props.conversation.id === props.chatDetails?.id) return;
+  const handleChooseActiveGroup = async () => {
+    if (props.conversation._id === props.chatDetails?.id) return;
     props.setChatDetails(
-      { id: props.conversation.id, username: props.conversation.name },
-      chatTypes.DIRECT
+      {
+        id: props.conversation._id,
+        name: props.conversation.name,
+        description: props.conversation.description,
+      },
+      chatTypes.GROUP
     );
     props.setMessages([]);
-    const response = await getChatHistoryApi(props.conversation.id);
+    const response = await getGroupHistoryApi(props.conversation._id);
     props.setMessages(response.messages);
   };
 
@@ -26,7 +30,7 @@ const GroupListItem = (props) => {
       <ListItemButton
         disableGutters
         sx={{ p: 0, px: 1 }}
-        onClick={handleChooseActiveChat}
+        onClick={handleChooseActiveGroup}
       >
         <ListItemAvatar>
           <Avatar

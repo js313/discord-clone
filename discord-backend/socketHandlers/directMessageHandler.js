@@ -7,28 +7,26 @@ const directMessageHandler = async (socket, io, data) => {
   try {
     const senderId = socket.user.id;
     const { receiverId, content } = data;
-    // Save message to database
+
+    let conversation = await Conversation.findOne({
+      sender: senderId,
+      receiver: receiverId,
+    });
+    // if conversation exists, add message to conversation
+    // else create new conversation and add message to conversation
+    if (!conversation) {
+      conversation = await Conversation.create({
+        sender: senderId,
+        receiver: receiverId,
+      });
+    }
     const message = await Message.create({
       sender: senderId,
+      conversation: conversation._id,
       content,
       type: "direct",
       contentType: "text",
     });
-
-    let conversation = await Conversation.findOne({
-      members: { $all: [senderId, receiverId] },
-    });
-    // if conversation exists, add message to conversation
-    // else create new conversation and add message to conversation
-    if (conversation) {
-      conversation.messages = [message._id, ...conversation.messages];
-      await conversation.save();
-    } else {
-      conversation = await Conversation.create({
-        members: [senderId, receiverId],
-        messages: [message._id],
-      });
-    }
 
     const socketIds = [
       ...(connectedUsers.get(receiverId) || []),

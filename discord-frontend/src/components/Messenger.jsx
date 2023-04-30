@@ -14,7 +14,7 @@ const Wrapper = styled("div")(({ theme }) => ({
 const Messenger = (props) => {
   return (
     <Wrapper>
-      {!props.chatDetails ? (
+      {!props.chatDetails && !props.groupDetails ? (
         <WelcomeMessage />
       ) : (
         <MessageContent details={props.chatDetails} />

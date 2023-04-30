@@ -1,23 +1,40 @@
 const Conversation = require("../../models/conversation");
 const Group = require("../../models/group");
+const Message = require("../../models/message");
 const { updateGroupsList } = require("../../socketServer");
 
-exports.getChatByReceiverId = async (req, res) => {
+exports.getChat = async (req, res) => {
   try {
     const senderId = req.user.id;
     const { receiverId } = req.params;
 
     const conversation = await Conversation.findOne({
-      members: { $all: [senderId, receiverId] },
-    }).populate({
-      path: "messages",
-      populate: {
-        path: "sender",
-        select: "username _id image imageBackground",
-      },
-    });
+      sender: senderId,
+      receiver: receiverId,
+    }).lean();
 
-    res.status(200).json({ success: true, message: "", data: conversation });
+    let messages = [];
+    if (conversation) {
+      messages = await Message.find({
+        conversation: conversation._id,
+      })
+        .sort({ date: -1 })
+        .populate({
+          path: "sender",
+          select: "imageBackground _id username",
+        });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "No messages found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "",
+      data: { ...conversation, messages },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Something went wrong" });
@@ -29,9 +46,33 @@ exports.getGroup = async (req, res) => {
     const senderId = req.user.id;
     const { id: groupId } = req.params;
 
-    const group = await Group.findOne({ _id: groupId, members: senderId });
-
-    res.status(200).json({ success: true, message: "", data: group });
+    const group = await Group.findOne({
+      _id: groupId,
+      "members.user": senderId,
+    }).lean();
+    let messages = [];
+    if (group) {
+      const member = group.members.find((member) => {
+        return member.user.toString() === senderId;
+      });
+      messages = await Message.find({
+        group: groupId,
+        date: { $gte: member.joinedAt, $lte: member.leftAt || Date.now() },
+      })
+        .sort({ date: -1 })
+        .populate({
+          path: "sender",
+          select: "imageBackground _id username",
+        });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Group does not exist or you are not a part of it",
+      });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "", data: { ...group, messages } });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Something went wrong" });

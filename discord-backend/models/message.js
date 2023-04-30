@@ -27,11 +27,13 @@ const messageSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Group",
   },
-  receiver: {
+  conversation: {
     type: mongoose.Types.ObjectId,
-    ref: "User",
+    ref: "Conversation",
   },
 });
+
+messageSchema.index({ date: 1, type: -1 });
 
 const Message = mongoose.model("Message", messageSchema);
 

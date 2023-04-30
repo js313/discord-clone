@@ -26,7 +26,6 @@ export const connectToSocket = (user) => {
   });
 
   socket.on("groups-list", (groups) => {
-    console.log(groups);
     store.dispatch(setGroups(groups));
   });
 

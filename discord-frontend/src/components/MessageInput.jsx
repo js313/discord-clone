@@ -42,7 +42,9 @@ const MessageInput = (props) => {
   return (
     <Wrapper>
       <Input
-        placeholder={`Message ${props.chatDetails.username}`}
+        placeholder={`Message ${
+          props.chatDetails.username || props.chatDetails.name
+        }`}
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         onKeyDown={handleKeyPress}

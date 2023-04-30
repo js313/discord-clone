@@ -13,13 +13,14 @@ const ChosenChat = (props) => {
         alignItems: "center",
       }}
     >
-      {props.username}
+      {props.name}
     </Typography>
   );
 };
 
 export default connect((state) => {
   return {
-    username: state.chat.chatDetails?.username || "",
+    name:
+      state.chat.chatDetails?.username || state.chat.chatDetails?.name || "",
   };
 })(ChosenChat);

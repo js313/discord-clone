@@ -2,43 +2,17 @@ import { createNewGroupApi } from "../../api";
 import { showAlert } from "./alertActions";
 
 export const groupActions = {
-  SET_GROUP_DETAILS: "GROUP.SET_GROUP_DETAILS",
-  SET_GROUP_TYPE: "GROUP.SET_GROUP_TYPE",
-  SET_MESSAGES: "GROUP.SET_MESSAGES",
   SET_GROUPS: "GROUP.SET_GROUPS",
 };
 
 export const getActions = (dispatch) => {
   return {
-    setGroupDetails: (details, type) => {
-      dispatch(setGroupDetails(details, type));
-    },
-    setMessages: (messages) => {
-      dispatch(setMessages(messages));
-    },
     setGroups: (groups) => {
       dispatch(setGroups(groups));
     },
     createNewGroup: (data) => {
       dispatch(createNewGroup(data));
     },
-  };
-};
-
-export const setGroupDetails = (details, type) => {
-  return {
-    type: groupActions.SET_GROUP_DETAILS,
-    payload: {
-      details,
-      type,
-    },
-  };
-};
-
-export const setMessages = (messages) => {
-  return {
-    type: groupActions.SET_MESSAGES,
-    payload: messages,
   };
 };
 

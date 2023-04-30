@@ -1,6 +1,6 @@
 BE:-
 User can spam send requests after request rejection.
-(BUG) Check if user logged in on direct message socket event
+Change conversation and message schema.
 
 FE:-
 useffect in /login, /register to redirect if already logged in.

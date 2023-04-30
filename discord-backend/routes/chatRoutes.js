@@ -1,7 +1,7 @@
 const express = require("express");
-const { getChatByReceiverId } = require("../controllers/chat/chatControllers");
+const { getChat } = require("../controllers/chat/chatControllers");
 const router = express.Router();
 
-router.get("/:receiverId", getChatByReceiverId);
+router.get("/:receiverId", getChat);
 
 module.exports = router;
