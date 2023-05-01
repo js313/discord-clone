@@ -7,7 +7,6 @@ const groupMessageHandler = async (socket, io, data) => {
   try {
     const senderId = socket.user.id;
     const { groupId, content } = data;
-    console.log(data);
 
     let group = await Group.findById(groupId).lean();
     if (
