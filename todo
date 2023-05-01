@@ -1,6 +1,6 @@
 BE:-
 User can spam send requests after request rejection.
-Change conversation and message schema.
+Implement pagination for messages
 
 FE:-
 useffect in /login, /register to redirect if already logged in.
@@ -9,7 +9,6 @@ Scrolling pagination for messages
 Do not send messages using socket.io, use REST API, let server emit it in real time(will be easier and probably efficient sending files).
 
 (BUG):-
-(VIMP)Messages pushed to users that have not opened that group or conversation.
 
 (NOTE):-
 Slow response as mongodb atlas taking too long to save messages
