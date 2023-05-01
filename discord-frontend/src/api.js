@@ -112,6 +112,7 @@ export const getChatHistoryApi = async (receiverId) => {
     return {
       success: true,
       messages: response.data?.data?.messages || [],
+      conversationId: response.data?.data?._id,
     };
   } catch (error) {
     checkNotLoggedIn(error);

@@ -30,7 +30,14 @@ export const connectToSocket = (user) => {
   });
 
   socket.on("update-chat-history", (data) => {
-    store.dispatch(setMessages(data.messages));
+    if (
+      data._id.toString() === store.getState().chat?.chatDetails?.conversationId
+    ) {
+      // If the conversation is the same as the one we are currently viewing
+      store.dispatch(setMessages(data.messages));
+    } else {
+      // update the unread count
+    }
   });
 
   socket.on("update-group-history", (data) => {

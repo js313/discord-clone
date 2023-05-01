@@ -12,12 +12,17 @@ import { getChatHistoryApi } from "../api";
 const ConversationListItem = (props) => {
   const handleChooseActiveChat = async () => {
     if (props.conversation.id === props.chatDetails?.id) return;
-    props.setChatDetails(
-      { id: props.conversation.id, username: props.conversation.username },
-      chatTypes.DIRECT
-    );
     props.setMessages([]);
     const response = await getChatHistoryApi(props.conversation.id);
+    console.log(response);
+    props.setChatDetails(
+      {
+        id: props.conversation.id,
+        username: props.conversation.username,
+        conversationId: response.conversationId,
+      },
+      chatTypes.DIRECT
+    );
     props.setMessages(response.messages);
   };
 

@@ -11,12 +11,9 @@ const updateChatHistory = async (conversation, toSockets, io) => {
         path: "sender",
         select: "imageBackground _id username",
       });
-
+    conversation.messages = messages;
     toSockets.forEach((socketId) => {
-      io.to(socketId).emit("update-chat-history", {
-        ...conversation,
-        messages,
-      });
+      io.to(socketId).emit("update-chat-history", conversation);
     });
   } catch (error) {
     console.log(error);

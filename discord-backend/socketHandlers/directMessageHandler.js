@@ -13,14 +13,14 @@ const directMessageHandler = async (socket, io, data) => {
         { $and: [{ user1: senderId }, { user2: receiverId }] },
         { $and: [{ user1: receiverId }, { user2: senderId }] },
       ],
-    });
+    }).lean();
     if (!conversation) {
       conversation = await Conversation.create({
         user1: senderId,
         user2: receiverId,
       });
     }
-    const message = await Message.create({
+    await Message.create({
       sender: senderId,
       conversation: conversation._id,
       content,
