@@ -12,16 +12,17 @@ import { getGroupHistoryApi } from "../api";
 const GroupListItem = (props) => {
   const handleChooseActiveGroup = async () => {
     if (props.conversation._id === props.chatDetails?.id) return;
+    props.setMessages([]);
+    const response = await getGroupHistoryApi(props.conversation._id);
     props.setChatDetails(
       {
         id: props.conversation._id,
         name: props.conversation.name,
         description: props.conversation.description,
+        groupId: response.groupId,
       },
       chatTypes.GROUP
     );
-    props.setMessages([]);
-    const response = await getGroupHistoryApi(props.conversation._id);
     props.setMessages(response.messages);
   };
 

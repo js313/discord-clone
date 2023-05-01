@@ -14,7 +14,6 @@ const ConversationListItem = (props) => {
     if (props.conversation.id === props.chatDetails?.id) return;
     props.setMessages([]);
     const response = await getChatHistoryApi(props.conversation.id);
-    console.log(response);
     props.setChatDetails(
       {
         id: props.conversation.id,

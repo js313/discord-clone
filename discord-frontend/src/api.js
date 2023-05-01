@@ -148,6 +148,7 @@ export const getGroupHistoryApi = async (groupId) => {
     return {
       success: true,
       messages: data.data.messages,
+      groupId: data.data._id,
     };
   } catch (error) {
     checkNotLoggedIn(error);

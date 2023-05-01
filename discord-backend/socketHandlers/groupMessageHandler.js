@@ -9,7 +9,7 @@ const groupMessageHandler = async (socket, io, data) => {
     const { groupId, content } = data;
     console.log(data);
 
-    let group = await Group.findById(groupId);
+    let group = await Group.findById(groupId).lean();
     if (
       !group ||
       !group.members.find((member) => senderId === member.user.toString())
