@@ -3,6 +3,7 @@ import store from "../app/store";
 import { setFriendRequests, setFriends } from "../app/actions/friendsActions";
 import { setMessages } from "../app/actions/chatActions";
 import { setGroups } from "../app/actions/groupActions";
+import { getActions } from "../app/actions/authActions";
 
 let socket = null;
 
@@ -14,6 +15,12 @@ export const connectToSocket = (user) => {
   });
   socket.on("connect", () => {
     console.log("Connected to socket server: " + socket.id);
+  });
+
+  socket.on("connect_error", (err) => {
+    getActions(store.dispatch).logout(() => {
+      window.location.href = "/login";
+    });
   });
 
   socket.on("friend-requests", (data) => {
