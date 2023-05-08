@@ -7,6 +7,8 @@ useffect in /login, /register to redirect if already logged in.
 Revise redux, store and actions, how it is implemented.
 Scrolling pagination for messages
 Do not send messages using socket.io, use REST API, let server emit it in real time(will be easier and probably efficient sending files).
+Implement end to ned encryption try using diffie hellman(implement double ratchet algorithm, if up for a challenge).
+(https://medium.com/@panghalamit/whatsapp-s-end-to-end-encryption-how-does-it-work-80020977caa0)
 
 (BUG):-
 
