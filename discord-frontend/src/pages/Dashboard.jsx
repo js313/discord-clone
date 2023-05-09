@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getActions } from "../app/actions/authActions";
 import { connect } from "react-redux";
 import { connectToSocket, disconnectFromSocket } from "../socket/connection";
+import Room from "../components/Room";
 
 const Wrapper = styled("div")(({ theme }) => ({
   width: "100%",
@@ -33,10 +34,16 @@ const Dashboard = (props) => {
       <FriendsSidebar />
       <Messenger />
       <AppBar />
+      {props.isUserInRoom && <Room />}
     </Wrapper>
   );
 };
 
-export default connect(null, (dispatch) => {
-  return { ...getActions(dispatch) };
-})(Dashboard);
+export default connect(
+  (state) => {
+    return state.room;
+  },
+  (dispatch) => {
+    return { ...getActions(dispatch) };
+  }
+)(Dashboard);
