@@ -1,4 +1,5 @@
 const connectedUsers = new Map();
+const activeRooms = new Map();
 
 const addUser = (userId, socketId) => {
   if (connectedUsers.has(userId)) {
@@ -20,4 +21,25 @@ const removeUser = (userId, socketId) => {
   }
 };
 
-module.exports = { addUser, removeUser, connectedUsers };
+const newActiveRoom = (userId, socketId) => {
+  if (!activeRooms.has(socketId)) {
+    const newActiveRoom = {
+      roomCreator: {
+        userId,
+        socketId,
+      },
+      participants: [
+        {
+          userId,
+          socketId,
+        },
+      ],
+    };
+    activeRooms.set(socketId, [newActiveRoom]);
+    console.log(activeRooms);
+    return newActiveRoom;
+  }
+  return activeRooms.get(socketId);
+};
+
+module.exports = { addUser, removeUser, connectedUsers, newActiveRoom };

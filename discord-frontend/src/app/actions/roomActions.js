@@ -17,3 +17,10 @@ export const setOpenRoom = (
     payload: { isUserInRoom, isUserRoomCreator },
   };
 };
+
+export const setRoomDetails = (roomDetails) => {
+  return {
+    type: roomActions.SET_ROOM_DETAILS,
+    payload: roomDetails,
+  };
+};

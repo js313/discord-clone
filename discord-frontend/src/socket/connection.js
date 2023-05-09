@@ -27,6 +27,10 @@ export const connectToSocket = (user) => {
   socket.on("update-chat-history", (data) => {
     store.dispatch(setMessages(data.messages));
   });
+
+  socket.on("room-create", (data) => {
+    console.log("Room create", data);
+  });
 };
 
 export const disconnectFromSocket = () => {
@@ -35,4 +39,8 @@ export const disconnectFromSocket = () => {
 
 export const sendDirectMessage = (data) => {
   socket.emit("direct-message", data);
+};
+
+export const createNewRoomSocket = () => {
+  socket.emit("room-create");
 };

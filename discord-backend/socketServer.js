@@ -9,6 +9,7 @@ const {
   updateFriendsList: updateFriendList,
 } = require("./socketHandlers/updates/friends");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
+const roomCreateHandler = require("./socketHandlers/roomCreateHandler");
 
 let io = null;
 
@@ -29,6 +30,10 @@ const registerSocketServer = (server) => {
     socket.on("direct-message", (data) =>
       directMessageHandler(socket, io, data)
     );
+
+    socket.on("room-create", () => {
+      roomCreateHandler(socket);
+    });
 
     socket.on("disconnect", async () => {
       removeConnectionHandler(socket, io);
