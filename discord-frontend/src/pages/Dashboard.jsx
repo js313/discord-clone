@@ -7,7 +7,11 @@ import AppBar from "../components/AppBar";
 import { useNavigate } from "react-router-dom";
 import { getActions } from "../app/actions/authActions";
 import { connect } from "react-redux";
-import { connectToSocket, disconnectFromSocket } from "../socket/connection";
+import {
+  connectToSocket,
+  disconnectFromSocket,
+  isConnected,
+} from "../socket/connection";
 import Room from "../components/Room";
 
 const Wrapper = styled("div")(({ theme }) => ({
@@ -23,7 +27,7 @@ const Dashboard = (props) => {
     if (!user) {
       disconnectFromSocket();
       navigate("/login");
-    } else {
+    } else if (!isConnected) {
       props.setUserDetails(user); //if signed in user refreshes or directly goes to dashboard, then user details are set in redux store
       connectToSocket(user);
     }

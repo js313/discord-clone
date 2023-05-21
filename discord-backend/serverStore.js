@@ -21,25 +21,33 @@ const removeUser = (userId, socketId) => {
   }
 };
 
-const newActiveRoom = (userId, socketId) => {
+const newActiveRoom = (userId, socketId, username) => {
   if (!activeRooms.has(socketId)) {
     const newActiveRoom = {
+      id: userId,
       roomCreator: {
         userId,
         socketId,
+        username,
       },
       participants: [
         {
           userId,
           socketId,
+          username,
         },
       ],
     };
-    activeRooms.set(socketId, [newActiveRoom]);
-    console.log(activeRooms);
+    activeRooms.set(socketId, newActiveRoom);
     return newActiveRoom;
   }
   return activeRooms.get(socketId);
 };
 
-module.exports = { addUser, removeUser, connectedUsers, newActiveRoom };
+module.exports = {
+  addUser,
+  removeUser,
+  connectedUsers,
+  newActiveRoom,
+  activeRooms,
+};

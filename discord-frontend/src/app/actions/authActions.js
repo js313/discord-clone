@@ -2,6 +2,7 @@ import { loginApi, registerApi } from "../../api";
 import { disconnectFromSocket } from "../../socket/connection";
 import { showAlert } from "./alertActions";
 import { setFriendRequests, setFriends } from "./friendsAction";
+import { setActiveRooms, setOpenRoom, setRoomDetails } from "./roomActions";
 
 const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
@@ -68,6 +69,9 @@ const logout = (navigate) => {
     dispatch(setUserDetails(null));
     dispatch(setFriendRequests([]));
     dispatch(setFriends([]));
+    dispatch(setActiveRooms([]));
+    dispatch(setOpenRoom());
+    dispatch(setRoomDetails(null));
     disconnectFromSocket();
     navigate("/login");
   };

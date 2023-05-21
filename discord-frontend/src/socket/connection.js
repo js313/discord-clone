@@ -2,6 +2,7 @@ import io from "socket.io-client";
 import store from "../app/store";
 import { setFriendRequests, setFriends } from "../app/actions/friendsAction";
 import { setMessages } from "../app/actions/chatActions";
+import { updateActiveRooms } from "./roomHandler";
 
 let socket = null;
 
@@ -12,6 +13,7 @@ export const connectToSocket = (user) => {
     },
   });
   socket.on("connect", () => {
+    isConnected = true;
     console.log("Connected to socket server: " + socket.id);
   });
 
@@ -31,10 +33,20 @@ export const connectToSocket = (user) => {
   socket.on("room-create", (data) => {
     console.log("Room create", data);
   });
+
+  socket.on("active-rooms", (data) => {
+    console.log(data);
+    updateActiveRooms(data);
+  });
 };
 
+export let isConnected = false;
+
 export const disconnectFromSocket = () => {
-  if (socket) socket.disconnect();
+  if (socket) {
+    isConnected = false;
+    socket.disconnect();
+  }
 };
 
 export const sendDirectMessage = (data) => {
@@ -43,4 +55,12 @@ export const sendDirectMessage = (data) => {
 
 export const createNewRoomSocket = () => {
   socket.emit("room-create");
+};
+
+export const joinRoomSocket = (data) => {
+  socket.emit("room-join", data);
+};
+
+export const leaveRoomSocket = (data) => {
+  socket.emit("room-leave", data);
 };

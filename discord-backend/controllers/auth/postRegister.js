@@ -38,6 +38,7 @@ const postRegister = async (req, res) => {
       success: true,
       message: "User created successfully",
       data: {
+        id: user._id,
         token,
         username: newUser.username,
         email: newUser.email,

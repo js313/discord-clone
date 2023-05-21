@@ -10,6 +10,8 @@ const {
 } = require("./socketHandlers/updates/friends");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
 const roomCreateHandler = require("./socketHandlers/roomCreateHandler");
+const roomJoinHandler = require("./socketHandlers/roomJoinHandler");
+const roomLeaveHandler = require("./socketHandlers/roomLeaveHandler");
 
 let io = null;
 
@@ -24,7 +26,7 @@ const registerSocketServer = (server) => {
     authSocket(socket, next);
   });
   io.on("connection", async (socket) => {
-    // console.log("New client connected: " + socket.id);
+    console.log("New client connected: " + socket.id);
     newConnectionHandler(socket, io);
 
     socket.on("direct-message", (data) =>
@@ -32,12 +34,20 @@ const registerSocketServer = (server) => {
     );
 
     socket.on("room-create", () => {
-      roomCreateHandler(socket);
+      roomCreateHandler(socket, io);
+    });
+
+    socket.on("room-join", (data) => {
+      roomJoinHandler(socket, io, data);
+    });
+
+    socket.on("room-leave", (data) => {
+      roomLeaveHandler(socket, io, data);
     });
 
     socket.on("disconnect", async () => {
       removeConnectionHandler(socket, io);
-      // console.log("Client disconnected");
+      console.log("Client disconnected");
     });
   });
 };

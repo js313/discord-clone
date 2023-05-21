@@ -35,6 +35,7 @@ const postLogin = async (req, res) => {
       success: true,
       message: "User logged in successfully",
       data: {
+        id: user._id,
         username: user.username,
         email: user.email,
         token,

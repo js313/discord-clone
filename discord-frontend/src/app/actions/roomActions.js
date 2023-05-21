@@ -21,6 +21,13 @@ export const setOpenRoom = (
 export const setRoomDetails = (roomDetails) => {
   return {
     type: roomActions.SET_ROOM_DETAILS,
-    payload: roomDetails,
+    payload: { roomDetails },
+  };
+};
+
+export const setActiveRooms = (rooms) => {
+  return {
+    type: roomActions.SET_ACTIVE_ROOMS,
+    payload: { rooms },
   };
 };
