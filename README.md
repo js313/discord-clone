@@ -1,6 +1,6 @@
 # Discord Clone: Chat Platform
 
-Welcome to Discord Clone! Our project is a real-time chat platform that offers a similar experience to the popular communication platform, Discord. 
+Welcome to Discord Clone! This project is a real-time chat platform that offers a similar experience to the popular communication platform, Discord. 
 
 ## Features
 
