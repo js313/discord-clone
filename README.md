@@ -1,19 +1,16 @@
-# Discord Clone: Chat and Voice Communication Platform
+# Discord Clone: Chat Platform
 
-Welcome to Discord Clone! Our project is a real-time chat and voice communication platform that offers a similar experience to the popular communication platform, Discord. 
+Welcome to Discord Clone! Our project is a real-time chat platform that offers a similar experience to the popular communication platform, Discord. 
 
 ## Features
 
 - Chat in real-time with other users
-- Voice and video communication using WebRTC
 - Secure user authentication and authorization
 - Create and manage multiple servers and channels
 - Customize user roles and permissions
 - Share files and media
 - Use emojis and reactions to express yourself
 - See typing indicators to know when others are typing
-- Receive notifications to stay updated
-- Switch to dark mode for a more comfortable experience
 
 ## Installation
 
